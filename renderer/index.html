@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>EmperorStrap</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="titlebar">
+    <div class="titlebar-drag">
+      <img src="assets/logo.png" class="titlebar-icon" alt="">
+      <span>EmperorStrap</span>
+    </div>
+    <div class="titlebar-btns">
+      <select id="langSelect" title="Dil / Language / Idioma" style="margin-right:8px;align-self:center;padding:4px 6px;font-size:11px;border-radius:6px">
+        <option value="tr">TR</option>
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+      </select>
+      <button id="tbMin" title="Simge durumuna küçült">
+        <svg viewBox="0 0 10 10"><rect x="0" y="4.5" width="10" height="1"/></svg>
+      </button>
+      <button id="tbClose" title="Kapat" class="tb-close">
+        <svg viewBox="0 0 10 10"><path d="M0 0l10 10M10 0L0 10" stroke-width="1.1" stroke="currentColor" fill="none"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="shell">
+    <nav class="sidebar">
+      <div class="brand">
+        <div class="crown"><img src="assets/logo.png" alt=""></div>
+        <div class="brand-text">
+          <div class="brand-name">Emperor<span>Strap</span></div>
+          <div class="brand-sub">v1.0.0</div>
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <button class="nav-btn active" data-page="dashboard">
+          <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+          Dashboard
+        </button>
+        <button class="nav-btn" data-page="flags">
+          <svg viewBox="0 0 24 24"><path d="M4 3v18M4 4h12l-2 4 2 4H4"/></svg>
+          FastFlags
+        </button>
+        <button class="nav-btn" data-page="optimizer">
+          <svg viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><circle cx="4" cy="12" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="20" cy="14" r="2"/></svg>
+          Optimizer
+        </button>
+        <button class="nav-btn" data-page="mods">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.5L21 10l-6.6 1.5L12 18l-2.4-6.5L3 10l6.6-1.5z"/></svg>
+          Mods
+        </button>
+        <button class="nav-btn" data-page="customize">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+          Customize
+        </button>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">kontrol ediliyor...</span>
+      </div>
+    </nav>
+
+    <main class="content">
+      <!-- DASHBOARD -->
+      <section class="page active" id="page-dashboard">
+        <div class="page-head">
+          <h1>Dashboard</h1>
+          <p>Made by Emperor (Yildiray)</p>
+        </div>
+
+        <div class="card hero-card">
+          <div class="hero-left">
+            <div class="hero-title" id="dashTitle">Roblox aranıyor...</div>
+            <div class="hero-sub" id="dashSub">—</div>
+          </div>
+          <button class="play-btn" id="playBtn" disabled>
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Oynat
+          </button>
+        </div>
+
+        <div class="grid-2">
+          <div class="card stat-card">
+            <div class="stat-label">Versiyon</div>
+            <div class="stat-value" id="statVersion">—</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-label">Aktif FastFlag</div>
+            <div class="stat-value" id="statFlags">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FASTFLAGS -->
+      <section class="page" id="page-flags">
+        <div class="ff-toolbar">
+          <button class="tbtn" id="btnAddNew"><span>+</span> Yeni ekle</button>
+          <button class="tbtn" id="btnDeleteSelected">Seçileni sil</button>
+          <button class="tbtn" id="btnDeleteAll">Tümünü sil</button>
+          <button class="tbtn" id="btnProfiles">Profiller</button>
+          <button class="tbtn tbtn-accent" id="btnShowPreset">Hazır flagleri göster</button>
+        </div>
+
+        <div class="ff-search-row">
+          <input id="ffSearch" class="ff-search" placeholder="Ara...">
+          <div class="ff-stats">
+            <span>Eklenen flag: <b id="statAdded">0</b></span>
+            <span>Bloat: <b id="statBloat">0%</b></span>
+          </div>
+        </div>
+
+        <div class="ff-table-wrap">
+          <table class="ff-table">
+            <thead>
+              <tr><th style="width:38px"></th><th>Etiketler</th><th>İsim</th><th>Değer</th><th style="width:30px"></th></tr>
+            </thead>
+            <tbody id="ffTbody"></tbody>
+          </table>
+        </div>
+
+        <div class="ff-bottombar">
+          <button class="tbtn" id="btnExportJson">JSON dışa aktar</button>
+          <button class="tbtn" id="btnCopyFlags">Flagleri kopyala</button>
+        </div>
+      </section>
+
+      <!-- profile modal -->
+      <div class="modal-overlay" id="profileModal">
+        <div class="modal">
+          <h3>Profiller</h3>
+          <div class="modal-row">
+            <input id="profileNameInput" placeholder="profil adı">
+            <button class="btn-primary" id="profileSaveBtn">Kaydet</button>
+          </div>
+          <div class="profile-list" id="profileList"></div>
+          <button class="btn-ghost" id="profileCloseBtn">Kapat</button>
+        </div>
+      </div>
+
+      <!-- OPTIMIZER -->
+      <section class="page" id="page-optimizer">
+        <div class="page-head">
+          <h1>Optimizer</h1>
+          <p>Görsel optimizasyon ve Low MS presetleri — tek tıkla flag olarak uygulanır</p>
+        </div>
+
+        <div class="opt-section-title">
+          <span>Görsel Optimizasyon</span>
+          <span class="opt-section-sub">gray sky · gölge · bloom · fog</span>
+        </div>
+        <div class="opt-grid" id="optGraphics"></div>
+
+        <div class="opt-section-title">
+          <span>Low MS Optimizer</span>
+          <span class="opt-section-sub">gecikme · ağ · fps</span>
+        </div>
+        <div class="opt-grid" id="optLowMs"></div>
+
+        <div class="ff-bottombar">
+          <button class="tbtn tbtn-accent" id="optApply">Seçilileri Uygula</button>
+          <button class="tbtn tbtn-accent" id="optApplyRestart">Uygula ve Yeniden Başlat</button>
+          <button class="tbtn" id="optReset">Sıfırla</button>
+          <span class="hint" id="optStatus"></span>
+        </div>
+      </section>
+
+      <!-- MODS -->
+      <section class="page" id="page-mods">
+        <div class="page-head">
+          <h1>Mods</h1>
+          <p>Mod klasörünü yönet</p>
+        </div>
+        <div class="card">
+          <p class="muted">Mod dosyalarını aşağıdaki klasöre at, EmperorStrap başlatırken otomatik okuyacak.</p>
+          <div class="mods-list" id="modsList"></div>
+          <button class="btn-primary" id="openModsBtn">Klasörü Aç</button>
+        </div>
+      </section>
+
+      <!-- CUSTOMIZE -->
+      <section class="page" id="page-customize">
+        <div class="page-head">
+          <h1>Customize</h1>
+          <p>ShiftLock — uygulama arayüzüne uygulanır</p>
+        </div>
+
+        <div class="opt-section-title"><span>ShiftLock</span><span class="opt-section-sub">flag preset</span></div>
+        <div class="card customize-card">
+          <div class="setting-row">
+            <div>
+              <div class="setting-name">ShiftLock Flag Preset</div>
+              <div class="setting-desc">Destekleyen oyunlarda kamera kilidi için flag başlatır</div>
+            </div>
+            <label class="switch"><input type="checkbox" id="shiftToggle"><span class="slider"></span></label>
+          </div>
+          <div class="ff-bottombar">
+            <button class="tbtn tbtn-accent" id="shiftApply">Uygula ve Yeniden Başlat</button>
+          </div>
+          <p class="hint">ShiftLock, oyunda kamera kilidi özelliği gibidir; desteklemeyen oyunlarda hiçbir şey olmaz.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="app-bottombar">
+    <label class="testmode">
+      <span class="switch small"><input type="checkbox" id="testModeToggle"><span class="slider"></span></span>
+      Test modu
+    </label>
+    <div class="bottombar-right">
+      <button class="btn-ghost" id="btnCloseApp">Kapat</button>
+      <button class="btn-ghost" id="btnSaveOnly">Kaydet</button>
+      <button class="btn-primary" id="btnSaveLaunch">Kaydet ve Başlat</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script>
+    document.getElementById('tbMin').addEventListener('click', () => window.api.win.minimize());
+    document.getElementById('tbClose').addEventListener('click', () => window.api.win.close());
+  </script>
+  <script src="renderer.js"></script>
+</body>
+</html>
